@@ -13,7 +13,7 @@ class JoinRequest(models.Model):
                      (REJECTED, "Rejected"),
                      (ACCEPTED, "Accepted"))
 
-    content_type = models.ForeignKey(ContentType)
+    content_type = models.ForeignKey("contenttypes.ContentType")
     object_id = models.PositiveIntegerField()
     realm = generic.GenericForeignKey()
 
