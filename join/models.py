@@ -4,14 +4,12 @@ from django.contrib.contenttypes import generic
 
 class JoinRequest(models.Model):
     PENDING = 0
-    WITHDRAWN = 1
+    ACCEPTED = 1
     REJECTED = 2
-    ACCEPTED = 3
 
     STATE_CHOICES = ((PENDING, "Pending"),
-                     (WITHDRAWN, "Withdrawn"),
-                     (REJECTED, "Rejected"),
-                     (ACCEPTED, "Accepted"))
+                     (ACCEPTED, "Accepted"),
+                     (REJECTED, "Rejected"),)
 
     content_type = models.ForeignKey("contenttypes.ContentType")
     object_id = models.PositiveIntegerField()
@@ -19,8 +17,11 @@ class JoinRequest(models.Model):
 
     user = models.ForeignKey("auth.User")
     message = models.TextField(blank=True)
-    response = models.TextField(blank=True)
+    state = models.IntegerField(choices=STATE_CHOICES, default=PENDING)
+
+    host_user = models.ForeignKey("auth.User", null=True)
+    host_message = models.TextField(blank=True)
+    host_state = models.IntegerField(choices=STATE_CHOICES, default=PENDING)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    state = models.CharField(max_length=1, choices=STATE_CHOICES,
-                             default=PENDING)
