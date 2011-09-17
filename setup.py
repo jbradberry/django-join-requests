@@ -20,7 +20,8 @@ for dirpath, dirnames, filenames in os.walk('join'):
             data_files.append(os.path.join(prefix, f))
 
 setup(name='django-join-requests',
-      description='A play-by-web app for Diplomacy',
+      description=
+      'A pluggable app to allow users to request access to a resource',
       version="0.1.0dev",
       author='Jeff Bradberry',
       author_email='jeff.bradberry@gmail.com',
