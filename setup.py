@@ -6,7 +6,7 @@ root_dir = os.path.dirname(__file__)
 if root_dir:
     os.chdir(root_dir)
 
-for dirpath, dirnames, filenames in os.walk('join'):
+for dirpath, dirnames, filenames in os.walk('joinrequests'):
     # Ignore dirnames that start with '.'
     dirnames[:] = [d for d in dirnames if not d.startswith('.')]
     if '__init__.py' in filenames:
@@ -15,7 +15,7 @@ for dirpath, dirnames, filenames in os.walk('join'):
             pkg = pkg.replace(os.path.altsep, '.')
         packages.append(pkg)
     elif filenames:
-        prefix = dirpath[5:] # Strip "join/" or "join\"
+        prefix = dirpath[13:] # Strip "joinrequests/" or "joinrequests\"
         for f in filenames:
             data_files.append(os.path.join(prefix, f))
 
@@ -26,9 +26,9 @@ setup(name='django-join-requests',
       author='Jeff Bradberry',
       author_email='jeff.bradberry@gmail.com',
       url='http://github.com/jbradberry/django-join-requests',
-      package_dir={'join': 'join'},
+      package_dir={'joinrequests': 'joinrequests'},
       packages=packages,
-      package_data={'join': data_files},
+      package_data={'joinrequests': data_files},
       classifiers=['Development Status :: 2 - Pre-Alpha',
                    'Environment :: Web Environment',
                    'Framework :: Django',
