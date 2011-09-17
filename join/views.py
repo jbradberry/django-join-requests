@@ -12,6 +12,7 @@ from models import JoinRequest
 def submit_request(request, template_name='join/join_request.html',
                    content_type=None, success_url=None, extra_context=None,
                    **kwargs):
+    extra_context = extra_context or {}
     if content_type is None:
         content_type = settings.DEFAULT_REALM_TYPE
     app, model = content_type.split('.')
@@ -21,13 +22,15 @@ def submit_request(request, template_name='join/join_request.html',
     if form.is_valid():
         req = form.save()
         redirect(success_url or realm.get_absolute_url())
-    return direct_to_template(request, template_name, extra_context or {})
+    extra_context['form'] = form
+    return direct_to_template(request, template_name, extra_context)
 
 
 @login_required
 def respond_request(request, template_name='join/join_response.html',
                     content_type=None, success_url=None, extra_context=None,
                     **kwargs):
+    extra_context = extra_context or {}
     if content_type is None:
         content_type = settings.DEFAULT_REALM_TYPE
     app, model = content_type.split('.')
@@ -41,4 +44,5 @@ def respond_request(request, template_name='join/join_response.html',
         if request.is_ajax():
             return # FIXME: some ajax response
         redirect(success_url or realm.get_absolute_url())
-    return direct_to_template(request, template_name, extra_context or {})
+    extra_context['form'] = form
+    return direct_to_template(request, template_name, extra_context)
