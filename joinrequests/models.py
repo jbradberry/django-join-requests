@@ -11,15 +11,16 @@ class JoinRequest(models.Model):
                      (ACCEPTED, "Accepted"),
                      (REJECTED, "Rejected"),)
 
-    content_type = models.ForeignKey("contenttypes.ContentType")
-    object_id = models.PositiveIntegerField()
+    content_type = models.ForeignKey("contenttypes.ContentType",
+                                     null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
     realm = generic.GenericForeignKey()
 
     user = models.ForeignKey("auth.User")
     message = models.TextField(blank=True)
     state = models.IntegerField(choices=STATE_CHOICES, default=PENDING)
 
-    host_user = models.ForeignKey("auth.User", null=True)
+    host_user = models.ForeignKey("auth.User", null=True, blank=True)
     host_message = models.TextField(blank=True)
     host_state = models.IntegerField(choices=STATE_CHOICES, default=PENDING)
 
